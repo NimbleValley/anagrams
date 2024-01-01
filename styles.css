@@ -24,6 +24,21 @@ h3 {
     user-select: none;
 }
 
+h5 {
+    width: fit-content;
+    display: block;
+    font-size: 3vh;
+    user-select: none;
+    margin: 0;
+    color: rgb(105, 56, 0);
+    transition: color 0.15s;
+}
+
+h5:hover {
+    cursor: pointer;
+    color: orangered;
+}
+
 p {
     width: fit-content;
     display: block;
@@ -63,10 +78,15 @@ form {
     width: 20vh;
     text-align: center;
     margin-right: 0.5vh;
+    transition: box-shadow 0.15s;
 }
 
 #word-input:hover {
     box-shadow: inset 0vh 0vh 0vh 0.25vh black;
+}
+
+#submit-button {
+    transition: filter 0.15s;
 }
 
 #submit-button:hover {
