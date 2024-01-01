@@ -1,0 +1,163 @@
+html {
+    margin: 0;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+h1 {
+    text-align: center;
+    font-size: 10vh;
+    user-select: none;
+}
+
+h3 {
+    width: fit-content;
+    display: block;
+    font-size: 4vh;
+    user-select: none;
+}
+
+p {
+    width: fit-content;
+    display: block;
+    font-size: 5vh;
+    white-space: break-spaces;
+    user-select: none;
+}
+
+button {
+    font-size: 4vh;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.horizontal-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#game-container {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+}
+
+#word-input {
+    font-size: 4vh;
+    width: 20vh;
+    text-align: center;
+    margin-right: 0.5vh;
+}
+
+#word-input:hover {
+    box-shadow: inset 0vh 0vh 0vh 0.25vh black;
+}
+
+#submit-button:hover {
+    filter: invert(1);
+}
+
+#score-panel {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    left: 5vh;
+    top: 5vh;
+    justify-content: center;
+    align-items: center;
+}
+
+#timer {
+    box-shadow: inset 0vh 0vh 0vh 3.75vh black;
+    font-size: 5vh;
+    width: 7.5vh;
+    height: 7.5vh;
+    text-align: center;
+    border-radius: 10000px;
+    line-height: 7.5vh;
+    user-select: none;
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+    background-color: rgb(163, 163, 163);
+    transition: box-shadow 1s linear;
+}
+
+#start-panel {
+    display: flex;
+    position: fixed;
+    background-color: aliceblue;
+    width: 100vw;
+    height: 100vh;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+}
+
+#end-panel {
+    display: none;
+    position: fixed;
+    background-color: aliceblue;
+    width: 100vw;
+    height: 100vh;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+}
+
+#start-button {
+    padding: 2vh 4vh 2vh 4vh;
+    font-size: 5vh;
+}
+
+#again-button {
+    padding: 2vh 4vh 2vh 4vh;
+    font-size: 5vh;
+}
+
+#used-words-text {
+    max-width: 75vw;
+    font-size: 2.5vh;
+    text-align: center;
+}
+
+.correct {
+    animation: correct 1s;
+}
+
+.wrong {
+    animation: wrong 1s;
+}
+
+@keyframes correct {
+    0% {
+        color: green;
+    }
+    100% {
+        color: black;
+    }
+}
+
+@keyframes wrong {
+    0% {
+        color: red;
+    }
+    100% {
+        color: black;
+    }
+}
