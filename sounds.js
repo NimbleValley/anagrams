@@ -30,7 +30,6 @@ function playRizz() {
 }
 
 function playPipe() {
-    pipe.currentTime = 0;
     pipe.play();
 }
 

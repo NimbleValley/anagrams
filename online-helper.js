@@ -5,7 +5,7 @@ const otherPlayerScores = document.getElementById('other-player-score');
 var inGame = false;
 var startedGame = false;
 
-let totalTime = 100;
+let totalTime = 50;
 
 playLobbyMusic();
 
@@ -51,6 +51,9 @@ function update() {
         } else {
             startedGame = true;
         }
+        if((Math.floor(seconds * 10) / 10 - 16) < 10) {
+            playPipe();
+        }
         if((Math.floor(seconds * 10) / 10 - 16) < 0 && startedGame) {
             inGame = false;
             startedGame = false;
@@ -74,12 +77,17 @@ var letters = [];
 var usedWords = [];
 var lengthScored = [100, 200, 400, 800, 1200, 2000, 3000, 4000];
 
-wordInput.addEventListener("keydown", function (event) {
+document.body.addEventListener("keydown", function (event) {
     if (event.key === "Enter") {
-        checkWord(event);
+        if(inGame) {
+            checkWord(event);
+        }
     }
     if (event.key === "Control" || event.key === "Alt") {
         wordInput.value = "";
+    }
+    if (event.key === "?") {
+        playerName = prompt('Name?');
     }
 });
 
@@ -134,7 +142,7 @@ function startGame() {
     usedWordsText.innerText = "--- Used words will show up here ---";
 
     let con = 'bbccddffgghhjkklllmmnnppqrrrrrssssssttttvwxyz';
-    let vow = 'aaaaaeeeeeeeeiiiiooouu';
+    let vow = 'aaaaaeeeeeeeiiiiooouu';
     letters = [];
 
     for (let i = 0; i < Math.floor(Math.random() * 3) + 3; i++) {
