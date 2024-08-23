@@ -61,6 +61,11 @@ form {
     align-items: center;
 }
 
+a {
+    padding: 2vh 4vh 2vh 4vh;
+    font-size: 5vh;
+}
+
 .horizontal-container {
     display: flex;
     justify-content: space-around;
@@ -180,4 +185,48 @@ form {
     100% {
         color: black;
     }
+}
+
+
+
+
+/* ONLINE */
+
+#seconds {
+    display: none;
+}
+
+#time-to-game {
+    font-size: 6vw;
+    margin: 0;
+}
+
+#player-grid {
+    display: grid;
+    position: fixed;
+    width: 96vw;
+    height: 40vh;
+    top: 0vh;
+    grid-template-columns: auto auto auto;
+    grid-template-rows: auto auto auto;
+    padding: 2vh;
+}
+
+#game-controls-container {
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    bottom: 5vh;
+}
+
+#user-score-text {
+    font-size: 5vh;
+}
+
+.player-text {
+    width: 100%;
+    text-align: center;
+    font-size: 10vh;
 }

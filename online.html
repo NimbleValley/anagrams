@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body style="display: flex; flex-direction: column;">
+    <h1 id="time-to-game"> Game begins in </h1>
+    <p id="user-score-text">Score: 0</p>
+    <p id="seconds"></p>
+    <div id="player-grid">
+        <p></p>
+        <p class="player-text">Player 1</p>
+        <p></p>
+        <p class="player-text" style="text-align: left;">Player 2</p>
+        <p></p>
+        <p class="player-text" style="text-align: right;">Player 3</p>
+    </div>
+
+    <div id="game-controls-container">
+        <form onsubmit="checkWord(event)">
+            <input type="text" name="input" id="word-input" autocomplete="off"
+                onkeydown="return wordUpdated(event.key)">
+            <button type="submit" id="submit-button">Enter</button>
+        </form>
+        <div class="horizontal-container">
+            <h3>Your Letters:</h3>
+            <p id="given-letters"></p>
+        </div>
+        <p id="used-words-text">--- Used words will show up here ---</p>
+    </div>
+</body>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+<script src="sounds.js"></script>
+<script src="words.js"></script>
+<script src="online-helper.js"></script>
+<script src="online.js"></script>
+
+</html>

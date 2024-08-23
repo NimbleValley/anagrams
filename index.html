@@ -12,7 +12,8 @@
     <div id="game-container">
         <h1 id="title">Anagrams</h1>
         <form onsubmit="checkWord(event)">
-            <input type="text" name="input" id="word-input" autocomplete="off" onkeydown="return wordUpdated(event.key)">
+            <input type="text" name="input" id="word-input" autocomplete="off"
+                onkeydown="return wordUpdated(event.key)">
             <button type="submit" id="submit-button">Enter</button>
         </form>
         <div class="horizontal-container">
@@ -27,7 +28,8 @@
     </div>
     <div id="start-panel">
         <h1>Click to begin the game!</h1>
-        <button id="start-button">Begin</button>
+        <button id="start-button">Offline</button>
+        <button id="online-button" onclick="window.open('./online.html')">Online</button>
         <p>This game was created by me in 2 hours.</p>
         <h5 onclick="window.open('https://github.com/NimbleValley/anagrams')">Github</h5>
     </div>
