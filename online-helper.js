@@ -1,39 +1,61 @@
 const gameTime = document.getElementById('time-to-game');
-
-const gameControlCOntainer = document.getElementById('game-controls-container');
+const gameControlContainer = document.getElementById('game-controls-container');
+const otherPlayerScores = document.getElementById('other-player-score');
 
 var inGame = false;
 var startedGame = false;
 
-let totalTime = 25;
+let totalTime = 100;
+
+playLobbyMusic();
 
 function update() {
     let seconds = totalTime - new Date().getTime() / 1000 % totalTime;
     document.getElementById('seconds').innerText = Math.round(seconds);
 
     if(!inGame) {
-        gameControlCOntainer.style.display = 'none';
+        gameControlContainer.style.display = 'none';
 
-        gameTime.innerText = `Game begins in ${(Math.round(seconds * 10) / 10 - 1).toFixed(1)}`;
+        gameTime.innerHTML = `
+        <span class='strobe'>Game begins in</span> 
+        <div id='timer-container'>
+        <span class='segment'>${Math.floor((seconds-1) / 10)}</span>
+        <span class='segment'>${(Math.floor(seconds-1) * 1) % 10}</span>
+        <span class='segment dot'>.</span>
+        <span class='segment' style='padding-right: 2.5vw'>${((Math.floor((seconds-1) * 10)) % 10)}</span>
+        </div>`;
         if(seconds <= 1) {
             inGame = true;
             startedGame = false;
             startGame();
         }
-    } else {
-        gameControlCOntainer.style.display = 'flex';
 
-        gameTime.innerText = `${(Math.round(seconds * 10) / 10 - 16).toFixed(1)}`;
-        if((Math.round(seconds * 10) / 10 - 15).toFixed(1) < 0) {
-            gameTime.innerText = "START";
+        if(seconds <= 4) {
+            playBattleMusic();
+            stopLobbyMusic();
+        }
+    } else {
+        gameControlContainer.style.display = 'flex';
+
+        gameTime.innerText = `${(Math.floor(seconds * 10) / 10 - 16).toFixed(1)}`;
+        gameTime.innerHTML = `<div id='timer-container'>
+        <span class='segment'>${Math.floor((seconds-16) / 10)}</span>
+        <span class='segment'>${(Math.floor(seconds-16) * 1) % 10}</span>
+        <span class='segment dot'>.</span>
+        <span class='segment' style='padding-right: 2.5vw'>${((Math.floor((seconds-16) * 10)) % 10)}</span>
+        </div>`;
+
+        if((Math.floor(seconds * 10) / 10 - 15).toFixed(1) < 0) {
+            gameTime.innerHTML = "START";
             startedGame = false;
         } else {
             startedGame = true;
         }
-        if((Math.round(seconds * 10) / 10 - 16) < 0 && startedGame) {
+        if((Math.floor(seconds * 10) / 10 - 16) < 0 && startedGame) {
             inGame = false;
             startedGame = false;
-            console.warn("OK.");
+            stopBattleMusic();
+            playLobbyMusic();
         }
     }
 
@@ -42,13 +64,11 @@ function update() {
 
 update();
 
-
 const wordInput = document.getElementById("word-input");
 const givenLetters = document.getElementById("given-letters");
 const timerElement = document.getElementById("timer");
 var timeRemaining = 5;
 const scoreText = document.getElementById("user-score-text");
-var score = 0;
 const usedWordsText = document.getElementById("used-words-text");
 var letters = [];
 var usedWords = [];
@@ -97,6 +117,16 @@ function checkWord(e) {
 }
 
 function startGame() {
+    wordInput.value = '';
+
+    playerRef.set({
+        id: playerId,
+        name: playerName,
+        lobby: 1,
+        score: 0,
+        words: []
+    });
+
     usedWords = [];
     score = 0;
     scoreText.innerText = `Score: 0`;
@@ -107,10 +137,10 @@ function startGame() {
     let vow = 'aaaaaeeeeeeeeiiiiooouu';
     letters = [];
 
-    for (let i = 0; i < Math.floor(Math.random() * 4) + 3; i++) {
+    for (let i = 0; i < Math.floor(Math.random() * 3) + 3; i++) {
         letters.push(vow.charAt(Math.floor(Math.random() * vow.length)));
     }
-    for (let i = 0; i < 7; i++) {
+    for (let i = 0; i < 9; i++) {
         letters.push(con.charAt(Math.floor(Math.random() * con.length)));
     }
 
@@ -148,6 +178,14 @@ function checkIfWordExists(word) {
 function updateScore(length) {
     score += lengthScored[length];
     scoreText.innerText = `Score: ${score}`;
+
+    playerRef.set({
+        id: playerId,
+        name: playerName,
+        lobby: 1,
+        score: score,
+        words: []
+    });
 }
 
 function showUsedWords() {

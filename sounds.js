@@ -6,6 +6,9 @@ const pipe = new Audio("sounds/pipe.mp3");
 const wrong = new Audio("sounds/wrong.mp3");
 const womp = new Audio("sounds/womp.mp3");
 
+const lobbyMusic = new Audio("sounds/lobby-music.m4a");
+const battleMusic = new Audio("sounds/battle-music.m4a");
+
 function playAirHorn() {
     airhorn.currentTime = 0;
     airhorn.play();
@@ -38,6 +41,24 @@ function playWrong() {
 async function playWomp() {
     await(sleep(1000));
     womp.play();
+}
+
+function playBattleMusic() {
+    battleMusic.play();
+}
+
+function stopBattleMusic() {
+    battleMusic.pause();
+    battleMusic.currentTime = 0;
+}
+
+function playLobbyMusic() {
+    lobbyMusic.play();
+}
+
+function stopLobbyMusic() {
+    lobbyMusic.pause();
+    lobbyMusic.currentTime = 0;
 }
 
 const sleep = (milliseconds) => {

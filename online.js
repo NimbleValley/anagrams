@@ -1,3 +1,4 @@
+var score = 0;
 
 // Import the functions you need from the SDKs you need
 //import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
@@ -46,7 +47,7 @@ firebase.auth().onAuthStateChanged((user) => {
             id: playerId,
             name: playerName,
             lobby: 1,
-            score: 0,
+            score: score,
             words: []
         });
 
@@ -99,7 +100,11 @@ function initGame() {
 
 function updatePlayerText() {
     let playerTexts = document.getElementsByClassName('player-text');
+    for (let i = 0; i < playerTexts.length; i++) {
+        //playerTexts[i].innerHTML = "";
+    }
     for (let i = 0; i < playersInMainLobby.length; i++) {
         playerTexts[i].innerHTML = playersInMainLobby[i].name;
+        playerTexts[i].parentElement.children[1].innerHTML = playersInMainLobby[i].score;
     }
 }
