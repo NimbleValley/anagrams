@@ -166,17 +166,17 @@ function startGame() {
 
     usedWordsText.innerText = "--- Used words will show up here ---";
 
-    let minutes = new Date().getMinutes();
+    let minutes = new Date().getMinutes() * 100;
 
     let con = 'bbccddffgghhjkklllmmnnppqrrrrrssssssttttvwxyz';
     let vow = 'aaaaaeeeeeeeiiiiooouu';
     letters = [];
 
     for (let i = 0; i < Math.floor(mulberry32(minutes) * 3) + 3; i++) {
-        letters.push(vow.charAt(Math.floor(mulberry32(minutes + i) * vow.length)));
+        letters.push(vow.charAt(Math.floor(mulberry32(minutes + i * 3) * vow.length)));
     }
     for (let i = 0; i < 8; i++) {
-        letters.push(con.charAt(Math.floor(mulberry32(minutes + i + 10) * con.length)));
+        letters.push(con.charAt(Math.floor(mulberry32(minutes + i * 5 + 100) * con.length)));
     }
 
     letters.sort(function (a, b) {
