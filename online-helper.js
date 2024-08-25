@@ -38,6 +38,7 @@ function update() {
         if (seconds <= 4) {
             playBattleMusic();
             stopLobbyMusic();
+            outputPanel.style.display = 'none';
         }
     } else {
         gameControlContainer.style.display = 'flex';
@@ -69,6 +70,8 @@ function update() {
             playLobbyMusic();
             playBuzzer();
             metalPipe.style.display = 'none';
+
+            endGame();
         }
     }
 
@@ -86,6 +89,10 @@ const usedWordsText = document.getElementById("used-words-text");
 var letters = [];
 var usedWords = [];
 var lengthScored = [100, 200, 400, 800, 1200, 2000, 3000, 4000];
+
+const outputPanel = document.getElementById('win-banner');
+outputPanel.style.display = 'none';
+const winText = document.getElementById('win-output-text');
 
 document.body.addEventListener("keydown", function (event) {
     if (event.key === "Enter") {
@@ -159,15 +166,17 @@ function startGame() {
 
     usedWordsText.innerText = "--- Used words will show up here ---";
 
+    let minutes = new Date().getMinutes();
+
     let con = 'bbccddffgghhjkklllmmnnppqrrrrrssssssttttvwxyz';
     let vow = 'aaaaaeeeeeeeiiiiooouu';
     letters = [];
 
-    for (let i = 0; i < Math.floor(Math.random() * 3) + 3; i++) {
-        letters.push(vow.charAt(Math.floor(Math.random() * vow.length)));
+    for (let i = 0; i < Math.floor(mulberry32(minutes) * 3) + 3; i++) {
+        letters.push(vow.charAt(Math.floor(mulberry32(minutes + i) * vow.length)));
     }
-    for (let i = 0; i < 9; i++) {
-        letters.push(con.charAt(Math.floor(Math.random() * con.length)));
+    for (let i = 0; i < 8; i++) {
+        letters.push(con.charAt(Math.floor(mulberry32(minutes + i + 10) * con.length)));
     }
 
     letters.sort(function (a, b) {
@@ -226,4 +235,28 @@ function showUsedWords() {
     });
 
     usedWordsText.innerText = usedWordsText.innerText.substring(1);
+}
+
+function mulberry32(a) {
+    let t = a += 0x6D2B79F5;
+    t = Math.imul(t ^ t >>> 15, t | 1);
+    t ^= t + Math.imul(t ^ t >>> 7, t | 61);
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+}
+
+async function endGame() {
+    await sleep(1500);
+    outputPanel.style.display = 'flex';
+
+    let highest = score;
+    let highestName = playerName;
+
+    for (let i = 0; i < playersInMainLobby.length; i++) {
+        if(parseInt(playersInMainLobby[i].score) > parseInt(highest)) {
+            highest = playersInMainLobby[i].score;
+            highestName = playersInMainLobby[i].name;
+        }
+    }
+
+    winText.innerText = `${highestName} Wins`;
 }

@@ -259,6 +259,25 @@ a {
     position: fixed;
 }
 
+#win-banner {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.623);
+    z-index: 10000;
+    font-family: "Chakra Petch", system-ui;
+    color: aqua;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    p {
+        font-size: 20vh !important;
+        font-weight: bold;
+        margin: 0;
+    }
+}
+
 .player-text {
     text-align: center;
     font-size: 10vh;
