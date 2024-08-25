@@ -9,13 +9,15 @@ const womp = new Audio("sounds/womp.mp3");
 const lobbyMusic = new Audio("sounds/lobby-music.m4a");
 const battleMusic = new Audio("sounds/battle-music.m4a");
 
+const metalPipe = document.getElementById('metal-pipe');
+metalPipe.style.display = 'none';
+
 function playAirHorn() {
     airhorn.currentTime = 0;
     airhorn.play();
 }
 
 function playBuzzer() {
-    buzzer.currentTime = 0;
     buzzer.play();
 }
 
@@ -31,6 +33,12 @@ function playRizz() {
 
 function playPipe() {
     pipe.play();
+
+    if (pipe.currentTime <= 0.5) {
+        metalPipe.style.display = 'block';
+    } else {
+        metalPipe.style.display = 'none';
+    }
 }
 
 function playWrong() {
@@ -38,7 +46,7 @@ function playWrong() {
 }
 
 async function playWomp() {
-    await(sleep(1000));
+    await (sleep(1000));
     womp.play();
 }
 

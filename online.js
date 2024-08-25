@@ -27,6 +27,8 @@ var players = {};
 var playerElements = {};
 
 var playersInMainLobby = [];
+var previousScores = [];
+var previousPlayers = [];
 
 var playerName = localStorage.getItem("name");
 while (playerName == null) {
@@ -99,12 +101,31 @@ function initGame() {
 }
 
 function updatePlayerText() {
+    let newScores = [];
+    let newPlayers = [];
     let playerTexts = document.getElementsByClassName('player-text');
     for (let i = 0; i < playerTexts.length; i++) {
-        //playerTexts[i].innerHTML = "";
+        playerTexts[i].parentNode.style.display = 'none';
     }
     for (let i = 0; i < playersInMainLobby.length; i++) {
         playerTexts[i].innerHTML = playersInMainLobby[i].name;
         playerTexts[i].parentElement.children[1].innerHTML = playersInMainLobby[i].score;
+        playerTexts[i].parentNode.style.display = 'flex';
+
+        if(previousPlayers.includes(playersInMainLobby[i].name)) {
+            if(previousScores[previousPlayers.indexOf(playersInMainLobby[i].name)] != playersInMainLobby[i].score) {
+                //playerTexts[i].className = 'player-text';
+                playerTexts[i].classList.add('green-strobe');
+                playerTexts[i].style.animation = 'none';
+                playerTexts[i].offsetHeight; /* trigger reflow */
+                playerTexts[i].style.animation = null; 
+            }
+        }
+
+        newScores.push(playersInMainLobby[i].score);
+        newPlayers.push(playersInMainLobby[i].name);
     }
+
+    previousPlayers = newPlayers;
+    previousScores = newScores;
 }

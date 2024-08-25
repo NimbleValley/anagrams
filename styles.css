@@ -254,6 +254,11 @@ a {
     box-shadow: black 0px 1vh 2.5vh;
 }
 
+#metal-pipe {
+    width: 67vw;
+    position: fixed;
+}
+
 .player-text {
     text-align: center;
     font-size: 10vh;
@@ -268,6 +273,8 @@ a {
     display: flex;
     flex-direction: column;
     height: 100%;
+    background: rgb(0, 0, 0);
+    background: radial-gradient(circle, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 100%);
 }
 
 .other-player-score {
@@ -315,6 +322,10 @@ a {
     color: orange;
 }
 
+.green-strobe {
+    animation: green-strobe 0.5s;
+}
+
 @keyframes information-strobe {
     0% {
         opacity: 0.25;
@@ -326,5 +337,21 @@ a {
 
     100% {
         opacity: 0.25;
+    }
+}
+
+@keyframes green-strobe {
+    0% {
+        color: rgb(0, 255, 13);
+        scale: 1.25;
+    }
+
+    75% {
+        color: rgb(255, 0, 234);
+    }
+
+    100% {
+        color: rgb(255, 211, 92);
+        scale: 1;
     }
 }

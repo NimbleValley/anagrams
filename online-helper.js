@@ -7,30 +7,35 @@ var startedGame = false;
 
 let totalTime = 50;
 
-playLobbyMusic();
+async function interacted() {
+    document.getElementById('interact-button').style.display = 'none';
+    //if (prompt(`Hello welcome to the 'Anagram Online Experience.' Please read the rulbook carefully so you do not cheat. Please note that this may cost money thank you. Donate today yes ;). Ok bye. (Please click ok because then we can play music, sound like a deal?).`) != 'ahrjlrgnlfn') {
+    playLobbyMusic();
+    //}
+}
 
 function update() {
     let seconds = totalTime - new Date().getTime() / 1000 % totalTime;
     document.getElementById('seconds').innerText = Math.round(seconds);
 
-    if(!inGame) {
+    if (!inGame) {
         gameControlContainer.style.display = 'none';
 
         gameTime.innerHTML = `
         <span class='strobe'>Game begins in</span> 
         <div id='timer-container'>
-        <span class='segment'>${Math.floor((seconds-1) / 10)}</span>
-        <span class='segment'>${(Math.floor(seconds-1) * 1) % 10}</span>
+        <span class='segment'>${Math.floor((seconds - 1) / 10)}</span>
+        <span class='segment'>${(Math.floor(seconds - 1) * 1) % 10}</span>
         <span class='segment dot'>.</span>
-        <span class='segment' style='padding-right: 2.5vw'>${((Math.floor((seconds-1) * 10)) % 10)}</span>
+        <span class='segment' style='padding-right: 2.5vw'>${((Math.floor((seconds - 1) * 10)) % 10)}</span>
         </div>`;
-        if(seconds <= 1) {
+        if (seconds <= 1) {
             inGame = true;
             startedGame = false;
             startGame();
         }
 
-        if(seconds <= 4) {
+        if (seconds <= 4) {
             playBattleMusic();
             stopLobbyMusic();
         }
@@ -39,26 +44,31 @@ function update() {
 
         gameTime.innerText = `${(Math.floor(seconds * 10) / 10 - 16).toFixed(1)}`;
         gameTime.innerHTML = `<div id='timer-container'>
-        <span class='segment'>${Math.floor((seconds-16) / 10)}</span>
-        <span class='segment'>${(Math.floor(seconds-16) * 1) % 10}</span>
+        <span class='segment'>${Math.floor((seconds - 16) / 10)}</span>
+        <span class='segment'>${(Math.floor(seconds - 16) * 1) % 10}</span>
         <span class='segment dot'>.</span>
-        <span class='segment' style='padding-right: 2.5vw'>${((Math.floor((seconds-16) * 10)) % 10)}</span>
+        <span class='segment' style='padding-right: 2.5vw'>${((Math.floor((seconds - 16) * 10)) % 10)}</span>
         </div>`;
 
-        if((Math.floor(seconds * 10) / 10 - 15).toFixed(1) < 0) {
+        if ((Math.floor(seconds * 10) / 10 - 15).toFixed(1) < 0) {
             gameTime.innerHTML = "START";
             startedGame = false;
         } else {
             startedGame = true;
         }
-        if((Math.floor(seconds * 10) / 10 - 16) < 10) {
+        if ((Math.floor(seconds * 10) / 10 - 16) < 8) {
             playPipe();
         }
-        if((Math.floor(seconds * 10) / 10 - 16) < 0 && startedGame) {
+        if ((Math.floor(seconds * 10) / 10 - 16) < 5) {
+            playWrong();
+        }
+        if ((Math.floor(seconds * 10) / 10 - 16) < 0 && startedGame) {
             inGame = false;
             startedGame = false;
             stopBattleMusic();
             playLobbyMusic();
+            playBuzzer();
+            metalPipe.style.display = 'none';
         }
     }
 
@@ -79,7 +89,7 @@ var lengthScored = [100, 200, 400, 800, 1200, 2000, 3000, 4000];
 
 document.body.addEventListener("keydown", function (event) {
     if (event.key === "Enter") {
-        if(inGame) {
+        if (inGame) {
             checkWord(event);
         }
     }
@@ -88,6 +98,13 @@ document.body.addEventListener("keydown", function (event) {
     }
     if (event.key === "?") {
         playerName = prompt('Name?');
+        playerRef.set({
+            id: playerId,
+            name: playerName,
+            lobby: 1,
+            score: 0,
+            words: []
+        });
     }
 });
 
@@ -101,15 +118,15 @@ function checkWord(e) {
     }
     gameTime.classList = "";
 
-    if(checkIfWordExists(word)) {
+    if (checkIfWordExists(word)) {
         wordInput.value = "";
         usedWords.push(word);
-        updateScore(word.length-3);
+        updateScore(word.length - 3);
         showUsedWords();
 
-        if(word.length <= 3) {
+        if (word.length <= 3) {
             playRizz();
-        } else if(word.length <= 5) {
+        } else if (word.length <= 5) {
             playAirHorn();
         } else {
             playHolyMoly();
@@ -125,6 +142,7 @@ function checkWord(e) {
 }
 
 function startGame() {
+    metalPipe.style.display = 'none';
     wordInput.value = '';
 
     playerRef.set({
