@@ -10,7 +10,7 @@ let totalTime = 50;
 async function interacted() {
     document.getElementById('interact-button').style.display = 'none';
     //if (prompt(`Hello welcome to the 'Anagram Online Experience.' Please read the rulbook carefully so you do not cheat. Please note that this may cost money thank you. Donate today yes ;). Ok bye. (Please click ok because then we can play music, sound like a deal?).`) != 'ahrjlrgnlfn') {
-    playLobbyMusic();
+    //playLobbyMusic();
     //}
 }
 
